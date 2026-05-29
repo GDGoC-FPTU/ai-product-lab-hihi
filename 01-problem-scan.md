@@ -3,7 +3,7 @@
 ## Thong tin ca nhan
 
 - Ho ten: Le Duy Hung
-- Ma so sinh vien: LDH1401
+- Ma so sinh vien: 2A202600718
 - Vai tro trong lab: AI Product Engineer tai Vin Smart Future
 - Chu de uu tien: Van hanh xe dien thong minh cho Xanh SM va VinFast
 

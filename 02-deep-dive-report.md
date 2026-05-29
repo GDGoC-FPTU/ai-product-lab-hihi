@@ -4,7 +4,7 @@
 
 - Ten nhom: hihi
 - Thanh vien:
-  - Le Duy Hung - LDH1401
+  - Le Duy Hung - 2A202600718
 - Vai tro gia dinh trong bai lab: AI Product Engineer, phu trach scoping, prompt prototype va danh gia ranh gioi van hanh.
 
 ## Quyet dinh lua chon bai toan
