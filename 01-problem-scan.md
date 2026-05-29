@@ -1,4 +1,6 @@
-# 1. SCAN
+# Name: Trần Hoàng Đạt - 2A202600807
+
+# PHRASE 1. SCAN
 
 Dưới đây là bảng quét cơ hội (SCAN) áp dụng 4 lenses để tìm kiếm các bài toán/bottleneck thực tế trong hoạt động vận hành của các công ty thành viên thuộc tập đoàn Vingroup:
 
@@ -13,11 +15,11 @@ Dưới đây là bảng quét cơ hội (SCAN) áp dụng 4 lenses để tìm k
 
 ---
 
-# 2. QUICK-ASSESS
+# PHRASE 2. QUICK-ASSESS
 
 Dưới đây là phân tích chi tiết cho 3 bài toán tiềm năng nhất được lựa chọn từ danh sách quét ở trên:
 
-## 1. Vinhomes — Tự động phân loại và điều hướng phản ánh cư dân
+## Vinhomes — Tự động phân loại và điều hướng phản ánh cư dân
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -49,7 +51,7 @@ Dưới đây là phân tích chi tiết cho 3 bài toán tiềm năng nhất đ
 
 ---
 
-## 2. Xanh SM — Xử lý sự cố sạc pin thực địa của tài xế
+## Xanh SM — Xử lý sự cố sạc pin thực địa của tài xế
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -83,7 +85,7 @@ Dưới đây là phân tích chi tiết cho 3 bài toán tiềm năng nhất đ
 
 ---
 
-## 3. Vinmec — Tự động soạn thảo tóm tắt hồ sơ xuất viện
+## Vinmec — Tự động soạn thảo tóm tắt hồ sơ xuất viện
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
