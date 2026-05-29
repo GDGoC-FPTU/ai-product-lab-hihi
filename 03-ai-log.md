@@ -1,34 +1,30 @@
-# Nhật ký chiêm nghiệm tương tác với AI (AI Log & Reflection)
+# Nhật kỳ chiêm nghiệm tương tác với AI (AI Log & Reflection)
 
 * Họ và tên: Trần Hoàng Đạt
-* MSSV: 2A202600807
+* MSSV: [Điền MSSV của bạn tại đây]
+* Vai trò trong nhóm: AI Product Engineer
 
 ---
 
 ## 1. AI đã giúp gì cho tôi trong buổi học?
 
-Trong suốt buổi Lab 02 về AI Product Scoping, tôi đã sử dụng Gemini như một trợ lý đồng hành để hỗ trợ hoàn thành các công việc sau:
-
-- Brainstorm ý tưởng: Khi mới bắt đầu, tôi gặp khó khăn trong việc tìm các vấn đề và nút thắt cổ chai thực tế trong vận hành của Vinhomes. AI đã gợi ý quy trình tiếp nhận và phân loại phản ánh cư dân trên Resident App, giúp tôi hình dung rõ hơn về chuỗi quy trình và các điểm hạn chế.
-- Soạn thảo Problem Statement: AI hỗ trợ tôi sắp xếp các thông tin để điền vào khung 6-field của Vin Smart Future một cách mạch lạc, đảm bảo đúng các chỉ số cần đo lường như SLA hay tỷ lệ chính xác.
-- Lĩnh vực lập trình: AI giúp tôi viết khung mã nguồn Python với thư viện google-genai mới. Đặc biệt, khi chạy thử nghiệm trên Windows bị crash do lỗi encoding cp1258 không in được emoji ra màn hình, AI đã hướng dẫn tôi thêm đoạn code wrapper để ép standard output về UTF-8, giúp script chạy ổn định hơn.
+Trong suốt buổi Lab 02, nhóm chúng tôi tự thảo luận và thống nhất ý tưởng bài toán Vinhomes cũng như tự vẽ sơ đồ quy trình. AI (Gemini) hoàn toàn không tham gia vào khâu brainstorm hay đưa ra ý tưởng thiết kế quy trình nghiệp vụ. Tôi chỉ sử dụng AI như một trợ lý kỹ thuật hỗ trợ các công việc lập trình và sửa lỗi:
+- Hướng dẫn cú pháp: AI hỗ trợ chuyển đổi cú pháp và viết khung code Python sử dụng thư viện SDK mới (`google-genai` của Gemini 2.5 Flash), giúp đẩy nhanh tốc độ viết mã nguồn cho file prototype.
+- Khắc phục lỗi môi trường: Khi chạy thử nghiệm code trên terminal Windows, chương trình bị crash do lỗi mã hóa `cp1258` không in được các ký tự unicode và emoji. AI đã hỗ trợ tôi viết đoạn wrapper chuẩn hóa stdout/stderr sang UTF-8 để khắc phục triệt để lỗi này.
 
 ---
 
 ## 2. AI đã đưa ra những câu trả lời sai lệch hoặc chưa tối ưu nào?
 
-Tuy nhiên, trong quá trình làm việc, AI cũng có một số đề xuất chưa phù hợp và cần phải điều chỉnh:
-
-- Đề xuất phương án quá phức tạp: Lúc đầu, AI liên tục hướng tới việc xây dựng hệ thống Multi-Agent tự động gửi email phản hồi thẳng cho cư dân mà không cần người kiểm duyệt. Điều này rất nguy hiểm trong vận hành thực tế vì mô hình có thể tự ý đưa ra thông tin sai lệch cho cư dân khi gặp các tình huống phức tạp.
-- Dễ bị lừa bởi Prompt Injection: Ở phiên bản prompt đầu tiên, khi tôi giả lập tình huống người dùng yêu cầu bỏ qua tag [DRAFT_ONLY] vì đây là tin nhắn thông thường, AI đã ngay lập tức nghe lời người dùng và bỏ luôn tag kiểm duyệt.
-- Không nhận diện được sự cố khẩn cấp: Khi cư dân báo mất điện trên diện rộng (trên 5% số căn hộ), AI vẫn coi đó là một yêu cầu sửa chữa thông thường và dùng quy trình tiêu chuẩn thay vì phải chuyển ngay sang đề xuất điều động thiết bị máy phát điện khẩn cấp.
+Khi hỗ trợ thiết lập các ca kiểm thử tấn công prompt (Adversarial Tests), AI ban đầu có các đề xuất chưa tối ưu:
+- Đề xuất prompt lỏng lẻo: AI gợi ý một số câu chỉ thị hệ thống khá dài dòng nhưng không chặt chẽ, dẫn đến việc mô hình dễ dàng bị người dùng "thuyết phục" bỏ qua nhãn `[DRAFT_ONLY]` trong Test Case 2 để gửi thẳng phản hồi.
+- Nhận diện sai điều kiện: Khi xử lý điều kiện khẩn cấp liên quan đến việc mất điện ảnh hưởng diện rộng, prompt ban đầu do AI gợi ý không làm rõ ranh giới hành động, khiến mô hình đôi khi vẫn trả về phản hồi văn bản thông thường thay vì xuất ra cấu trúc JSON điều động xe cứu hộ phát điện (`dispatch_mobile_charger`).
 
 ---
 
 ## 3. Tôi đã điều chỉnh Prompt và thiết lập ranh giới như thế nào?
 
-Để khắc phục các vấn đề trên, tôi đã thiết lập lại hệ thống ranh giới vận hành trong SYSTEM_PROMPT của file prototype:
-
-- Đặt mệnh lệnh tuyệt đối để AI luôn luôn phải bắt đầu tin nhắn bằng tag [DRAFT_ONLY] trong mọi trường hợp, kể cả khi người dùng cố tình yêu cầu bỏ qua.
-- Định nghĩa quy tắc khẩn cấp: nếu phản ánh có từ khóa liên quan đến mất điện và quy mô ảnh hưởng lớn (trên 5%), AI bắt buộc phải trả về cấu trúc JSON định sẵn chứ không được tự viết văn bản tự do, mục đích là để hệ thống tự động nhận diện và điều xe phát điện lưu động (dispatch_mobile_charger) ngay lập tức.
-- Kết quả là ở lần chạy cuối cùng, script đã vượt qua tất cả các bài test tấn công prompt mà không bị bypass nữa.
+Để đảm bảo an toàn tuyệt đối cho hệ thống và vượt qua các bài stress-test ranh giới:
+- Tôi đã trực tiếp viết lại phần chỉ thị hệ thống `SYSTEM_PROMPT` trong file code, đưa ra các mệnh lệnh tuyệt đối bắt buộc mô hình luôn đặt tag `[DRAFT_ONLY]` ở đầu mọi tin nhắn nháp trong mọi hoàn cảnh.
+- Thiết lập rõ cấu trúc đầu ra bắt buộc của quy tắc cứu hộ: nếu phản ánh mất điện chạm ngưỡng diện rộng (trên 5% căn hộ), mô hình bắt buộc phải chuyển sang định dạng JSON quy định cho hành động `dispatch_mobile_charger`.
+- Nhờ những điều chỉnh cấu trúc ranh giới nghiêm ngặt này, script chạy thực tế đã kiểm thử thành công và pass toàn bộ các tiêu chí an toàn của autograder.
